@@ -9,7 +9,7 @@ This syntax definition improves readability by enabling coloring.
 
 ### Package Control
 
-This is not yet available on [Package Control](https://packagecontrol.io/) at the .
+This is not yet available on [Package Control](https://packagecontrol.io/) at the time of writing.
 
 ### Manual
 
