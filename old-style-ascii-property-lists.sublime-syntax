@@ -1,0 +1,74 @@
+%YAML 1.2
+---
+file_extensions:
+  - pbxproj
+  - plist
+scope: source.asciiplist
+version: 2
+contexts:
+  main:
+    - match: '"'
+      scope: punctuation.definition.string.begin
+      push: double_quoted_string
+
+    - match: '//'
+      scope: punctuation.definition.comment
+      push: line_comment
+
+    - match: /\*
+      push: block_comment
+
+    - match: '\('
+      scope: punctuation.section.parens.begin
+      push: array
+
+    - match: '{'
+      scope: punctuation.section.braces.begin
+      push: dictionary
+
+    - match: '<'
+      scope:
+      push: binary_data
+
+    - match: ','
+      scope: punctuation.separator
+
+    - match: ';'
+      scope: punctuation.terminator
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double
+    - match: '\\.'
+      scope: constant.character.escape
+    - match: '"'
+      scope: punctuation.definition.string.end
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line
+    - match: $
+      pop: true
+
+  block_comment:
+    - meta_scope: comment.block
+    - match: \*/
+      pop: true
+
+  array:
+    - include: main
+    - match: '\)'
+      scope: punctuation.section.parens.end
+      pop: true
+
+  dictionary:
+    - match: '='
+      scope: keyword.operator.assignment
+    - include: main
+    - match: '}'
+      scope: punctuation.section.braces.end
+      pop: true
+
+  binary_data:
+    - meta_scope: constant.other
+    - match: '>'
+      pop: true
